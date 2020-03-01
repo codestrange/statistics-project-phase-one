@@ -13,3 +13,8 @@ age_mode = mode(age)
 age_median = median(age)
 age_mean = mean(age)
 age_sd = sd(age)
+
+overall_mode = mode(overall)
+overall_median = median(overall)
+overall_mean = mean(overall)
+overall_sd = sd(overall)
