@@ -56,3 +56,9 @@ print(potential_sd)
 print('Se selecionaron la edad, la valoración general y el potencial, porque consideramos que son las principales características por las cual un jugador puede ser evaluado.')
 
 # 1b
+
+boxplot(x=age, xlab='Edad')
+boxplot(x=overall, xlab='Valoración General')
+boxplot(x=potential, xlab='Potencial')
+
+
