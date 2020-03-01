@@ -18,3 +18,8 @@ overall_mode = mode(overall)
 overall_median = median(overall)
 overall_mean = mean(overall)
 overall_sd = sd(overall)
+
+potential_mode = mode(potential)
+potential_median = median(potential)
+potential_mean = mean(potential)
+potential_sd = sd(potential)
