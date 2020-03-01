@@ -9,6 +9,8 @@ age = data[, 5]
 overall = data[, 11]
 potential = data[, 12]
 
+# 1a
+
 age_mode = mode(age)
 age_median = median(age)
 age_mean = mean(age)
@@ -52,3 +54,5 @@ print('Desviación estandar del Potencial')
 print(potential_sd)
 
 print('Se selecionaron la edad, la valoración general y el potencial, porque consideramos que son las principales características por las cual un jugador puede ser evaluado.')
+
+# 1b
