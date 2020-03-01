@@ -50,3 +50,5 @@ print('Media del Potencial')
 print(potential_mean)
 print('Desviación estandar del Potencial')
 print(potential_sd)
+
+print('Se selecionaron la edad, la valoración general y el potencial, porque consideramos que son las principales características por las cual un jugador puede ser evaluado.')
