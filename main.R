@@ -3,62 +3,43 @@ mode <- function(v) {
     uniqv[which.max(tabulate(match(v, uniqv)))]
 }
 
-data <- read.csv(file = 'database.csv')
+get_sample <- function(database, n, replace=FALSE) {
+    database[sample(1:length(database), n, replace = replace),]
+}
 
-age = data[, 5]
-overall = data[, 11]
-potential = data[, 12]
+get_params <- function(database, name) {
+    x_mode = mode(age)
+    x_median = median(age)
+    x_mean = mean(age)
+    x_sd = sd(age)
+
+    print(paste('Moda -', name))
+    print(x_mode)
+    print(paste('Mediana -', name))
+    print(x_median)
+    print(paste('Media -', name))
+    print(x_mean)
+    print(paste('Desviación estandar -', name))
+    print(x_sd)
+
+    c(x_mode, x_median, x_mean, x_sd)
+}
+
+database <- read.csv(file = 'database.csv')
+
+age = database[, 5]
+overall = database[, 11]
+potential = database[, 12]
 
 # 1a
 
-age_mode = mode(age)
-age_median = median(age)
-age_mean = mean(age)
-age_sd = sd(age)
-
-print('Moda de la Edad')
-print(age_mode)
-print('Mediana de la Edad')
-print(age_median)
-print('Media de la Edad')
-print(age_mean)
-print('Desviación estandar de la Edad')
-print(age_sd)
-
-overall_mode = mode(overall)
-overall_median = median(overall)
-overall_mean = mean(overall)
-overall_sd = sd(overall)
-
-print('Moda de la Valoración General')
-print(overall_mode)
-print('Mediana de la Valoración General')
-print(overall_median)
-print('Media de la Valoración General')
-print(overall_mean)
-print('Desviación estandar de la Valoración General')
-print(overall_sd)
-
-potential_mode = mode(potential)
-potential_median = median(potential)
-potential_mean = mean(potential)
-potential_sd = sd(potential)
-
-print('Moda del Potencial')
-print(potential_mode)
-print('Mediana del Potencial')
-print(potential_median)
-print('Media del Potencial')
-print(potential_mean)
-print('Desviación estandar del Potencial')
-print(potential_sd)
-
-print('Se selecionaron la edad, la valoración general y el potencial, porque consideramos que son las principales características por las cual un jugador puede ser evaluado.')
+age_params = get_params(age, 'Edad')
+overall_params = get_params(overall, 'Valoración General')
+potential_params = get_params(potential, 'Potencial')
 
 # 1b
 
 boxplot(x=age, xlab='Edad')
 boxplot(x=overall, xlab='Valoración General')
 boxplot(x=potential, xlab='Potencial')
-
 
