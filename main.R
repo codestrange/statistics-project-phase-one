@@ -106,9 +106,9 @@ tableAge = do.call(rbind, Map(data.frame, database500=database500$age, database1
 tableOverall = do.call(rbind, Map(data.frame, database500=database500$overall, database100r=database100r$overall, database100=database100$overall, database50r=database50r$overall, database50=database50$overall, database30r=database30r$overall, database30=database30$overall, database20r=database20r$overall, database20=database20$overall))
 tablePotential = do.call(rbind, Map(data.frame, database500=database500$potential, database100r=database100r$potential, database100=database100$potential, database50r=database50r$potential, database50=database50$potential, database30r=database30r$potential, database30=database30$potential, database20r=database20r$potential, database20=database20$potential))
 
-boxplot(x=tableAge, xlab='Edad')
-boxplot(x=tableOverall, xlab='Valoración')
-boxplot(x=tablePotential, xlab='Potencial')
+boxplot(x=tableAge, xlab='Edad', names=c('Muestra 500', 'Muestra 100 (remp)', 'Muestra 100', 'Muestra 50 (remp)', 'Muestra 50', 'Muestra 30 (remp)', 'Muestra 30', 'Muestra 20 (remp)', 'Muestra 20'))
+boxplot(x=tableOverall, xlab='Valoración', names=c('Muestra 500', 'Muestra 100 (remp)', 'Muestra 100', 'Muestra 50 (remp)', 'Muestra 50', 'Muestra 30 (remp)', 'Muestra 30', 'Muestra 20 (remp)', 'Muestra 20'))
+boxplot(x=tablePotential, xlab='Potencial', names=c('Muestra 500', 'Muestra 100 (remp)', 'Muestra 100', 'Muestra 50 (remp)', 'Muestra 50', 'Muestra 30 (remp)', 'Muestra 30', 'Muestra 20 (remp)', 'Muestra 20'))
 
 # 2d
 
