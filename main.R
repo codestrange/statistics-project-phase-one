@@ -15,41 +15,53 @@ get_sample <- function(database, n, replace=FALSE) {
     database[sample(1:length(database[,1]), n, replace = replace),]
 }
 
-get_params <- function(database, name) {
+get_params <- function(database, name=NULL) {
     x_mode = mode(database)
     x_median = median(database)
     x_mean = mean(database)
     x_sd = sd(database)
-
-    print(paste('Moda -', name))
-    print(x_mode)
-    print(paste('Mediana -', name))
-    print(x_median)
-    print(paste('Media -', name))
-    print(x_mean)
-    print(paste('Desviación estandar -', name))
-    print(x_sd)
-
     c(x_mode, x_median, x_mean, x_sd)
 }
 
-database <- read.csv(file = 'database.csv')
+calculate_params <- function(database, title, view=FALSE) {
+    age = database$age
+    overall = database$overall
+    potential = database$potential
 
-age = database$age
-overall = database$overall
-potential = database$potential
+    table = do.call(rbind, Map(data.frame, Edad=age, Valoración=overall, Potencial=potential))
+    table1 = data.frame(cor(table))
+
+    age_params = get_params(age)
+    overall_params = get_params(overall)
+    potential_params = get_params(potential)
+
+    names = c('Moda', 'Mediana', 'Media', 'Desviacion Estandar')
+    table2 = do.call(rbind, Map(data.frame, Medidas=names, Edad=age_params, Valoración=overall_params, Potencial=potential_params))
+
+    names = c('Edad Correlación', 'Valoración Correlación', 'Potencial Correlación')
+    table3 = do.call(rbind, Map(data.frame, Medidas=names, Edad=table1$Edad, Valoración=table1$Valoración, Potencial=table1$Potencial))
+    result = rbind(table2, table3)[,2:4]
+
+    if (view) {
+        View(result, title=title)
+    }
+
+    return(result)
+}
+
+view = FALSE
+
+database <- read.csv(file = 'database.csv')
 
 # 1a
 
-age_params = get_params(age, 'Edad')
-overall_params = get_params(overall, 'Valoración General')
-potential_params = get_params(potential, 'Potencial')
+# param = calculate_params(database, 'database', view=view)
 
 # 1b
 
-boxplot(x=age, xlab='Edad')
-boxplot(x=overall, xlab='Valoración General')
-boxplot(x=potential, xlab='Potencial')
+# table = do.call(rbind, Map(data.frame, Edad=database$age, Valoracion=database$overall, Potencial=database$potential))
+#
+# boxplot(x=table, xlab='General')
 
 # 2
 
@@ -65,119 +77,59 @@ database50 = get_sample(database500, 50)
 database30 = get_sample(database500, 30)
 database20 = get_sample(database500, 20)
 
-# 2a 2b
+# 2a
 
-age500 = database500$age
-overall500 = database500$overall
-potential500 = database500$potential
+params100r = calculate_params(database100r, 'database100r', view=view)
+params50r = calculate_params(database50r, 'database50r', view=view)
+params30r = calculate_params(database30r, 'database30r', view=view)
+params20r = calculate_params(database20r, 'database20r', view=view)
+params100 = calculate_params(database100, 'database100', view=view)
+params50 = calculate_params(database50, 'database50', view=view)
+params30 = calculate_params(database30, 'database30', view=view)
+params20 = calculate_params(database20, 'database20', view=view)
 
-age500_params = get_params(age500, 'Edad')
-overall500_params = get_params(overall500, 'Valoración General')
-potential500_params = get_params(potential500, 'Potencial')
+# 2b
 
-age100r = database100r$age
-overall100r = database100r$overall
-potential100r = database100r$potential
-
-age100r_params = get_params(age100r, 'Edad')
-overall100r_params = get_params(overall100r, 'Valoración General')
-potential100r_params = get_params(potential100r, 'Potencial')
-
-age50r = database50r$age
-overall50r = database50r$overall
-potential50r = database50r$potential
-
-age50r_params = get_params(age50r, 'Edad')
-overall50r_params = get_params(overall50r, 'Valoración General')
-potential50r_params = get_params(potential50r, 'Potencial')
-
-age30r = database30r$age
-overall30r = database30r$overall
-potential30r = database30r$potential
-
-age30r_params = get_params(age30r, 'Edad')
-overall30r_params = get_params(overall30r, 'Valoración General')
-potential30r_params = get_params(potential30r, 'Potencial')
-
-age20r = database20r$age
-overall20r = database20r$overall
-potential20r = database20r$potential
-
-age20r_params = get_params(age20r, 'Edad')
-overall20r_params = get_params(overall20r, 'Valoración General')
-potential20r_params = get_params(potential20r, 'Potencial')
-
-age100 = database100$age
-overall100 = database100$overall
-potential100 = database100$potential
-
-age100_params = get_params(age100, 'Edad')
-overall100_params = get_params(overall100, 'Valoración General')
-potential100_params = get_params(potential100, 'Potencial')
-
-age50 = database50$age
-overall50 = database50$overall
-potential50 = database50$potential
-
-age50_params = get_params(age50, 'Edad')
-overall50_params = get_params(overall50, 'Valoración General')
-potential50_params = get_params(potential50, 'Potencial')
-
-age30 = database30$age
-overall30 = database30$overall
-potential30 = database30$potential
-
-age30_params = get_params(age30, 'Edad')
-overall30_params = get_params(overall30, 'Valoración General')
-potential30_params = get_params(potential30, 'Potencial')
-
-age20 = database20$age
-overall20 = database20$overall
-potential20 = database20$potential
-
-age20_params = get_params(age20, 'Edad')
-overall20_params = get_params(overall20, 'Valoración General')
-potential20_params = get_params(potential20, 'Potencial')
+params500 = calculate_params(database500, 'database500', view=view)
 
 # 2c
 
-boxplot(x=age500, xlab='Edad Población de 500')
-boxplot(x=overall500, xlab='Valoración General Población de 500')
-boxplot(x=potential500, xlab='Potencial Población de 500')
+tableAge = do.call(rbind, Map(data.frame, database500=database500$age, database100r=database100r$age, database100=database100$age, database50r=database50r$age, database50=database50$age, database30r=database30r$age, database30=database30$age, database20r=database20r$age, database20=database20$age))
+tableOverall = do.call(rbind, Map(data.frame, database500=database500$overall, database100r=database100r$overall, database100=database100$overall, database50r=database50r$overall, database50=database50$overall, database30r=database30r$overall, database30=database30$overall, database20r=database20r$overall, database20=database20$overall))
+tablePotential = do.call(rbind, Map(data.frame, database500=database500$potential, database100r=database100r$potential, database100=database100$potential, database50r=database50r$potential, database50=database50$potential, database30r=database30r$potential, database30=database30$potential, database20r=database20r$potential, database20=database20$potential))
 
-boxplot(x=age100r, xlab='Edad Muestra de 100 con remplazo')
-boxplot(x=overall100r, xlab='Valoración General Muestra de 100 con remplazo')
-boxplot(x=potential100r, xlab='Potencial Muestra de 100 con remplazo')
-
-boxplot(x=age50r, xlab='Edad Muestra de 50 con remplazo')
-boxplot(x=overall50r, xlab='Valoración General Muestra de 50 con remplazo')
-boxplot(x=potential50r, xlab='Potencial Muestra de 50 con remplazo')
-
-boxplot(x=age30r, xlab='Edad Muestra de 30 con remplazo')
-boxplot(x=overall30r, xlab='Valoración General Muestra de 30 con remplazo')
-boxplot(x=potential30r, xlab='Potencial Muestra de 30 con remplazo')
-
-boxplot(x=age20r, xlab='Edad Muestra de 20 con remplazo')
-boxplot(x=overall20r, xlab='Valoración General Muestra de 20 con remplazo')
-boxplot(x=potential20r, xlab='Potencial Muestra de 20 con remplazo')
-
-boxplot(x=age100, xlab='Edad Muestra de 100 sin remplazo')
-boxplot(x=overall100, xlab='Valoración General Muestra de 100 sin remplazo')
-boxplot(x=potential100, xlab='Potencial Muestra de 100 sin remplazo')
-
-boxplot(x=age50, xlab='Edad Muestra de 50 sin remplazo')
-boxplot(x=overall50, xlab='Valoración General Muestra de 50 sin remplazo')
-boxplot(x=potential50, xlab='Potencial Muestra de 50 sin remplazo')
-
-boxplot(x=age30, xlab='Edad Muestra de 30 sin remplazo')
-boxplot(x=overall30, xlab='Valoración General Muestra de 30 sin remplazo')
-boxplot(x=potential30, xlab='Potencial Muestra de 30 sin remplazo')
-
-boxplot(x=age20, xlab='Edad Muestra de 20 sin remplazo')
-boxplot(x=overall20, xlab='Valoración General Muestra de 20 sin remplazo')
-boxplot(x=potential20, xlab='Potencial Muestra de 20 sin remplazo')
+boxplot(x=tableAge, xlab='Edad')
+boxplot(x=tableOverall, xlab='Valoración')
+boxplot(x=tablePotential, xlab='Potencial')
 
 # 2d
+
+age100r = database100r$age
+age100 = database100$age
+age50r = database50r$age
+age50 = database50$age
+age30r = database30r$age
+age30 = database30$age
+age20r = database20r$age
+age20 = database20$age
+
+overall100r = database100r$overall
+overall100 = database100$overall
+overall50r = database50r$overall
+overall50 = database50$overall
+overall30r = database30r$overall
+overall30 = database30$overall
+overall20r = database20r$overall
+overall20 = database20$overall
+
+potential100r = database100r$potential
+potential100 = database100$potential
+potential50r = database50r$potential
+potential50 = database50$potential
+potential30r = database30r$potential
+potential30 = database30$potential
+potential20r = database20r$potential
+potential20 = database20$potential
 
 print('Intervalo de confianza para la varianza de la Edad de la muestra de 100 con remplazo')
 print(var_interval(age100r))
