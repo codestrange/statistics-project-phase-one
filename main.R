@@ -53,15 +53,23 @@ view = FALSE
 
 database <- read.csv(file = 'database.csv')
 
+# 1
+
+age = database$age
+overall = database$overall
+potential = database$potential
+
 # 1a
 
-param = calculate_params(database, 'database', view=view)
+age_params = get_params(age, 'Edad')
+overall_params = get_params(overall, 'Valoración')
+potential_params = get_params(potential, 'Potencial')
 
 # 1b
 
-table = do.call(rbind, Map(data.frame, Edad=database$age, Valoracion=database$overall, Potencial=database$potential))
-
-boxplot(x=table, xlab='General')
+boxplot(x=age, xlab='Edad')
+boxplot(x=overall, xlab='Valoración')
+boxplot(x=potential, xlab='Potencial')
 
 # 2
 
