@@ -65,6 +65,8 @@ age_params = get_params(age, 'Edad')
 overall_params = get_params(overall, 'Valoración')
 potential_params = get_params(potential, 'Potencial')
 
+cor_table = cor(database[,c(5, 11, 12)])
+
 # 1b
 
 boxplot(x=age, xlab='Edad')
