@@ -55,13 +55,13 @@ database <- read.csv(file = 'database.csv')
 
 # 1a
 
-# param = calculate_params(database, 'database', view=view)
+param = calculate_params(database, 'database', view=view)
 
 # 1b
 
-# table = do.call(rbind, Map(data.frame, Edad=database$age, Valoracion=database$overall, Potencial=database$potential))
-#
-# boxplot(x=table, xlab='General')
+table = do.call(rbind, Map(data.frame, Edad=database$age, Valoracion=database$overall, Potencial=database$potential))
+
+boxplot(x=table, xlab='General')
 
 # 2
 
